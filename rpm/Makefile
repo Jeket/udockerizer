@@ -1,6 +1,11 @@
 #!/usr/bin/make
 
-include ../../version
+include ../version
+
+ifneq (,$(wildcard ../.env))
+	include .env
+	export
+endif
 
 DEFAULT_VERSION := $(NXT_VERSION)
 DEFAULT_RELEASE := 1
@@ -264,7 +269,7 @@ rpmbuild/SPECS/unit-%.spec: unit.module.spec.in ../../docs/changes.xml | rpmbuil
 	cat ../../build/unit-$(MODULE_SUFFIX_$*).rpm-changelog | sed -e \
 		"s/> - $(DEFAULT_VERSION)-$(DEFAULT_RELEASE)/> - $(MODULE_VERSION_$*)-$(MODULE_RELEASE_$*)/" \
 		>> $@.tmp
-	mv $@.tmp $@ 
+	mv $@.tmp $@
 
 unit-%: check-build-depends-% rpmbuild/SPECS/unit-%.spec rpmbuild/SOURCES/unit-$(VERSION).tar.gz
 	@echo "===> Building $(subst _,-,$@) package" ; \

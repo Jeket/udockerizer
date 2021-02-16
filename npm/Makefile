@@ -1,6 +1,11 @@
 #!/usr/bin/make
 
-include ../../version
+include ../version
+
+ifneq (,$(wildcard ../.env))
+	include .env
+	export
+endif
 
 VERSION ?= $(NXT_VERSION)
 VERNUM ?= $(NXT_VERNUM)

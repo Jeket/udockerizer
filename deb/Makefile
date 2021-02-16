@@ -1,6 +1,11 @@
 #!/usr/bin/make
 
-include ../../version
+include ../version
+
+ifneq (,$(wildcard ../.env))
+	include .env
+	export
+endif
 
 DEFAULT_VERSION := $(NXT_VERSION)
 DEFAULT_RELEASE := 1

@@ -1,7 +1,12 @@
 #!/usr/bin/make
 
-include ../version
+include version
 include shasum.mak
+
+ifneq (,$(wildcard ./.env))
+	include .env
+	export
+endif
 
 VERSION ?= $(NXT_VERSION)
 RELEASE ?= 1
